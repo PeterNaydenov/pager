@@ -3,6 +3,7 @@
 ![license](https://img.shields.io/github/license/peterNaydenov/pager)
 
 
+
 A library to split results into multiple pages. The module works with data, doesn't provide any UI, and is easy to use.
 
 ## Installation
