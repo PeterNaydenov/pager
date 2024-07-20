@@ -31,7 +31,7 @@ return {
     , countPages
     , reset
 }
-} // paginator
+} // pager func.
 
 
 
