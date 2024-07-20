@@ -56,3 +56,12 @@ const page3 = pages.get ( 3, 5 ) // get a page 3 if page contains 5 items
 ```
 
 
+
+## Credits
+'@peter.naydenov/pager' was created and supported by Peter Naydenov.
+
+
+
+## License
+'@peter.naydenov/pager' is released under the [MIT License](http://opensource.org/licenses/MIT).
+
