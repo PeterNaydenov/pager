@@ -1,21 +1,21 @@
 {
   "name": "@peter.naydenov/pager",
   "description": "A library to split results into multiple pages",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "license": "MIT",
   "author": "Peter Naydenov",
   "main": "src/main.js",
   "type": "module",
   "exports": {
-          ".": {
-                  "import": "./dist/pager.esm.mjs",
-                  "require": "./dist/pager.cjs",
-                  "default": "./dist/pager.umd.js"
-          },
-          "./package.json": "./package.json",
-          "./dist/*": "./dist/*",
-          "./src/*": "./src/*"
-      },
+    ".": {
+      "import": "./dist/pager.esm.mjs",
+      "require": "./dist/pager.cjs",
+      "default": "./dist/pager.umd.js"
+    },
+    "./package.json": "./package.json",
+    "./dist/*": "./dist/*",
+    "./src/*": "./src/*"
+  },
   "scripts": {
     "build": "rollup -c",
     "test": "mocha test",
@@ -29,8 +29,6 @@
     "result",
     "pager"
   ],
-  
-  
   "dependencies": {
     "@peter.naydenov/stack": "^3.0.0"
   },
