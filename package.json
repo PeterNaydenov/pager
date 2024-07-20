@@ -1,0 +1,56 @@
+{
+  "name": "@peter.naydenov/pager",
+  "description": "A library to split results into multiple pages",
+  "version": "1.0.0",
+  "license": "MIT",
+  "author": "Peter Naydenov",
+  "main": "src/main.js",
+  "type": "module",
+  "exports": {
+          ".": {
+                  "import": "./dist/pager.esm.mjs",
+                  "require": "./dist/pager.cjs",
+                  "default": "./dist/pager.umd.js"
+          },
+          "./package.json": "./package.json",
+          "./dist/*": "./dist/*",
+          "./src/*": "./src/*"
+      },
+  "scripts": {
+    "build": "rollup -c",
+    "test": "mocha test",
+    "cover": "c8 mocha test"
+  },
+  "keywords": [
+    "result",
+    "pager"
+  ],
+  
+  
+  "dependencies": {
+    "@peter.naydenov/stack": "^3.0.0"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^26.0.1",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-terser": "^0.4.4",
+    "c8": "^10.1.2",
+    "chai": "^5.1.1",
+    "mocha": "^10.6.0",
+    "rollup": "^4.18.1"
+  },
+  "c8": {
+    "include": [
+      "src/**/*.js"
+    ],
+    "exclude": [
+      "node_modules",
+      "test",
+      "test-data"
+    ],
+    "reporter": [
+      "lcov",
+      "text-summary"
+    ]
+  }
+}

@@ -1,0 +1,1 @@
+"use strict";var e=require("@peter.naydenov/stack");module.exports=function(t=[]){const n=e({type:"FIFO"});n.push(t);const r=()=>n.getSize();return{push:e=>n.push(e),pull:function(e=1,t=20,r=0){const u=r+(e-1)*t;return n.peek(t,u)},getSize:r,countPages:function(e=20){return Math.ceil(r()/e)},reset:()=>n.reset()}};
