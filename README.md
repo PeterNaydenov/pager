@@ -1,6 +1,7 @@
 # Pager (@peter.naydenov/pager)
 ![version](https://img.shields.io/github/package-json/v/peterNaydenov/pager)
 ![license](https://img.shields.io/github/license/peterNaydenov/pager)
+![language](https://img.shields.io/github/languages/top/peterNaydenov/pager)
 
 
 
