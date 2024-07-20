@@ -21,6 +21,10 @@
     "test": "mocha test",
     "cover": "c8 mocha test"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PeterNaydenov/pager.git"
+  },
   "keywords": [
     "result",
     "pager"
