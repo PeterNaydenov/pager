@@ -51,11 +51,56 @@ const page3 = pages.get ( 3, 5 ) // get a page 3 if page contains 5 items
 ## Pager Methods
 
 ```js
-  push       : 'Extend result array with new item'
-, get        : 'Get a page from result array'
-, getSize    : 'Count the number of items in result array'
+  push       : 'Insert a new item to the results array'
+, get        : 'Get a page from results array'
+, getSize    : 'Count the number of items in results array'
 , countPages : 'Calculate the number of pages'
 ```
+
+## Pager Object API
+
+Create a pager object with the `pager` function.
+```js
+const pageObject = pager ( initialResultsArray );
+// initialArray -> Any[]
+```
+
+
+### pagerObject.push ()
+Insert a new item(s) to the results array:
+```js
+pageObject.push ( item ) // Insert a single item
+pageObject.push ( [ item1, item2 ] ) // Insert many items to the results array
+// item, item1, item2 -> Any
+```
+
+
+### pagerObject.get ()
+Get a page from results array
+```js
+pageObject.get ( pageNumber, pageSize, offset ) // Get a page from results array
+// pageNumber -> Number. Default: 1. Number of the page
+// pageSize -> Number. Default: 20. Number of items per page
+// offset -> Number. Default: 0. Number of items to skip before starting the page
+// return -> Any[]. Array of items for specified page segment
+```
+
+### pagerObject.getSize ()
+Count the number of items in results array
+```js
+pageObject.getSize () // Count the number of items in results array
+// return -> Number
+```
+
+
+### pagerObject.countPages ()
+Calculate the number of pages
+```js
+pageObject.countPages ( pageSize ) // Calculate the number of pages
+// pageSize -> Number. Default: 20. Number of items per page
+// return -> Number. Number of pages
+```
+
 
 
 
