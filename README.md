@@ -2,7 +2,7 @@
 ![version](https://img.shields.io/github/package-json/v/peterNaydenov/pager)
 ![license](https://img.shields.io/github/license/peterNaydenov/pager)
 ![language](https://img.shields.io/github/languages/top/peterNaydenov/pager)
-
+![npm package minimized gzipped size (select exports)](https://img.shields.io/bundlejs/size/%40peter.naydenov%2Fpager)
 
 
 A library to split results into multiple pages. The module works with data, doesn't provide any UI, and is easy to use.
