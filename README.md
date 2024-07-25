@@ -17,10 +17,11 @@ npm install @peter.naydenov/pager
 From your javascript or node.js project:
 
 ```js
+
+// in es6 project
 import pager from '@peter.naydenov/pager'
 
-// or
-
+// or in commonjs project
 const pager = require ('@peter.naydenov/pager')
 
 ```
