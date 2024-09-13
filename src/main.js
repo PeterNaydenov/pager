@@ -2,7 +2,15 @@ import stack from "@peter.naydenov/stack"
 
 
 
+const defaultPageSize = 20;
+
+
+
 function pager ( initialData = [] ) {
+    
+    if (!Array.isArray(initialData)) {
+          throw new TypeError ( 'Initial data must be an array')
+      }
 
 const resultStack = stack ({ type: 'FIFO' })
 resultStack.push ( initialData )
@@ -13,12 +21,12 @@ const
   , reset   = () => resultStack.reset ()
   ;
 
-function get (pageNumber=1, pageSize=20, offset=0) {
+function get (pageNumber=1, pageSize=defaultPageSize, offset=0) {
     const countOffset = offset + (pageNumber-1) * pageSize;
     return resultStack.peek ( pageSize, countOffset )
 } // pull func.
 
-function countPages ( number=20 ) {
+function countPages ( number=defaultPageSize ) {
         return Math.ceil ( getSize () / number )
     } // calcPages func.
 
