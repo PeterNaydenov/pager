@@ -49,4 +49,97 @@ describe ( 'Paginator', () => {
         expect ( pages.countPages()  ).to.be.equal ( 2 ) // Default items per page -> 20
     }) // it count pages
 
+
+
+
+    // =====================================================================
+    // BUG REGRESSIONS
+    // =====================================================================
+
+    // -----------------------------------------------------------------
+    // BUG 1 — `getSize` and `get` were inconsistent when the data
+    // contained `null` or `undefined` entries. The internal stack
+    // (`@peter.naydenov/stack`) drops both in its `peek` implementation
+    // — so `get` returned only the non-empty items, but `getSize` still
+    // counted the empty slots. The pager now strips `null`/`undefined`
+    // at the entry points (constructor + `push`) so the two views
+    // always agree on the count of real items.
+    // -----------------------------------------------------------------
+    it ( 'BUG 1 — null entries in initial data are dropped (count + retrieve agree)', () => {
+        const pages = pager ( [ 1, null, 2, undefined, 3, null ] )
+        // 3 real items (1, 2, 3), 3 empty slots (null, undefined, null)
+        expect ( pages.getSize() ).to.equal ( 3 )
+        expect ( pages.get(1, 10) ).to.deep.equal ( [ 1, 2, 3 ] )
+        // The count and the array length agree — the empty slots are
+        // compacted out, not silently kept in the size counter.
+    }) // it BUG 1 — init
+
+    it ( 'BUG 1 — undefined entries in initial data are dropped', () => {
+        const pages = pager ( [ 1, undefined, 2, 3 ] )
+        expect ( pages.getSize() ).to.equal ( 3 )
+        expect ( pages.get(1, 10) ).to.deep.equal ( [ 1, 2, 3 ] )
+    }) // it BUG 1 — init undefined
+
+    it ( 'BUG 1 — null entries in push (array) are dropped', () => {
+        const pages = pager ( [ 1, 2 ] )
+        pages.push ( [ 3, null, 4, undefined, 5 ] )
+        expect ( pages.getSize() ).to.equal ( 5 )
+        expect ( pages.get(1, 10) ).to.deep.equal ( [ 1, 2, 3, 4, 5 ] )
+    }) // it BUG 1 — push array
+
+    it ( 'BUG 1 — null entries in push (single item) are dropped', () => {
+        // README line 73 documents `push(item)` as "Insert a single
+        // item". A null/undefined single item is an empty slot — it
+        // should be a no-op, not a phantom count.
+        const pages = pager ( [ 1, 2 ] )
+        pages.push ( null )
+        expect ( pages.getSize() ).to.equal ( 2 )
+        pages.push ( undefined )
+        expect ( pages.getSize() ).to.equal ( 2 )
+        pages.push ( 3 )
+        expect ( pages.getSize() ).to.equal ( 3 )
+    }) // it BUG 1 — push single
+
+    it ( 'BUG 1 — pushing only empty entries is a no-op', () => {
+        const pages = pager ( [ 1 ] )
+        pages.push ( [ null, undefined ] )
+        expect ( pages.getSize() ).to.equal ( 1 )
+        pages.push ( null )
+        expect ( pages.getSize() ).to.equal ( 1 )
+    }) // it BUG 1 — all-empty push
+
+    it ( 'BUG 1 — getSize stays in sync after mixed valid + empty pushes', () => {
+        // Simulates the original failure mode: an array with empties
+        // pushed alongside valid items. Before the fix, getSize would
+        // grow by the empty count too, and the two views would drift.
+        const pages = pager ( [ 1, 2, 3 ] )
+        pages.push ( [ null, 4, undefined, 5, null ] )
+        pages.push ( [ 6, null ] )
+        pages.push ( 7 )
+        expect ( pages.getSize() ).to.equal ( 7 )
+        expect ( pages.get(1, 20) ).to.deep.equal ( [ 1, 2, 3, 4, 5, 6, 7 ] )
+    }) // it BUG 1 — mixed
+
+    // -----------------------------------------------------------------
+    // BUG 2 — `countPages(0)` returned `Infinity` (Math.ceil(N/0)) and
+    // `countPages(-k)` returned a negative number (Math.ceil(N/-k)).
+    // Both are nonsensical. A non-positive page size now returns 0 —
+    // "no pages fit in a non-positive slot".
+    // -----------------------------------------------------------------
+    it ( 'BUG 2 — countPages(0) returns 0, not Infinity', () => {
+        const pages = pager ( [ 1, 2, 3, 4, 5 ] )
+        expect ( pages.countPages(0) ).to.equal ( 0 )
+    }) // it BUG 2 — zero
+
+    it ( 'BUG 2 — countPages(-5) returns 0, not -1', () => {
+        const pages = pager ( [ 1, 2, 3, 4, 5 ] )
+        expect ( pages.countPages(-5) ).to.equal ( 0 )
+    }) // it BUG 2 — negative
+
+    it ( 'BUG 2 — countPages on an empty pager with a non-positive size is still 0', () => {
+        const pages = pager ( [] )
+        expect ( pages.countPages(0) ).to.equal ( 0 )
+        expect ( pages.countPages(-1) ).to.equal ( 0 )
+    }) // it BUG 2 — empty + non-positive
+
 }) // describe
