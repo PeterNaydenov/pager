@@ -1,6 +1,12 @@
 # Release History
 
 
+### 1.0.5 ( 2024-07-25)
+- [x] Dependencies update. @peter.naydenov/stack - v.3.0.1;
+- [x] Migrate testing framework from mocha to vitest;
+- [x] Migrate coverage framework from c8 to @vitest/coverage-v8;
+
+
 
 ### 1.0.4 ( 2024-07-22)
 - [x] Fix: Ignore `null`/`undefined` on init and push; empty pushes do nothing;
